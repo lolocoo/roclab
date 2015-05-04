@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2015 by anonymous (http://jsbin.com/nubuqesoba/4/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<html>
+<head>
+<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <meta charset="utf-8">
+  <title>JS Bin</title>
+</head>
+<body>
+
+<script id="jsbin-javascript">
+$(function(){
+  var arr = [];
+  function preload(picArr, callback){
+    var picObj = {}, 
+        picLen = picArr.length,
+        addImgToObj = function(imgName, img){
+          picObj[imgName]=img;
+        };
+    while(picLen--){
+      var img = new Image(),
+          url = picArr[picLen],
+          imgName = url.slice(url.lastIndexOf('/')+1, -4);
+      img.src = picArr[picLen];
+      picObj[imgName] = img;
+      img.onload = addImgToObj(imgName, img);
+    }
+    callback.call(this, picObj);
+  }
+  var testArr = [
+    'http://s.cn.bing.net/az/hprichbg/rb/DevetakiCave_ZH-CN13229318639_1920x1080.jpg',
+    'http://s.cn.bing.net/az/hprichbg/rb/KelpGoose_ZH-CN11521792782_1920x1080.jpg',
+    'http://s.cn.bing.net/az/hprichbg/rb/LihuBridge_ZH-CN13125700510_1920x1080.jpg'
+  ];
+  
+  preload(testArr, function(obj){
+    for(var item in obj){
+      $('body').append('<img src="'+obj[item].src+'">');
+    }
+  });
+});
+</script>
+</body>
+</html>
