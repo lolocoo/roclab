@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Socket.IO chat</title>
+    <script src="./js/socket.io.js"></script>
+</head>
+<body>
+    <ul id="message"></ul>
+    <form action="">
+        <input id="m" autocomplete="off" />
+        <button id="btn">Send</button>
+    </form>
+    <script>
+    let socket = io();
+    console.log(socket)
+    document.querySelector('#btn').addEventListener('click', function(e){
+        e.preventDefault();
+        socket.emit('chat message', document.querySelector('#m').value);
+        document.querySelector('#m').value = '';
+        return false;
+    });
+    socket.on('chat message', function(msg){
+        document.querySelector('#message').insertAdjacentHTML('beforeEnd', `<li>${msg}</li>`);
+        document.querySelector('#typing').remove();
+    })
+    document.querySelector('#m').addEventListener('focus', function(e){
+        console.log(e);
+        socket.emit('typing');
+    })
+    document.querySelector('#m').addEventListener('blur', function(e){
+        console.log(e);
+        socket.emit('out typing');
+    })
+    socket.on('typing', function(msg){
+        document.querySelector('#message').insertAdjacentHTML('beforeEnd', `<li id="typing">writing ...</li>`)
+    })
+    </script>
+</body>
+</html>
