@@ -1,0 +1,11 @@
+{
+  "name": "project-parcel",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/lolocoo/roclab.git",
+  "author": "lolocoo",
+  "license": "MIT",
+  "devDependencies": {
+    "cssnano": "^4.1.10"
+  }
+}
