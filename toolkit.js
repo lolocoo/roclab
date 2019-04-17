@@ -1,16 +1,19 @@
+let _toString = Object.prototype.toString;
+
 const toolkit = {
     call: (key, ...args) => ctx => ctx[key](...args),
     over: (...fns) => (...args) => fns.map(fn => fn.apply(null, args)),
     unary: fn => val => fn(val),
+    isRegExp: (v) => _toString.call(v) === '[object RegExp]',
     deepFlatten: arr => [].concat(...arr.map(v => (Array.isArray(v) ? deepFlatten(v) : v))),
     diff: (a, b) => { const s = new Set(b); return a.filter(x => !s.has(x)); },
     bottomVisible: () => document.documentElement.clientHeight + window.scrollY >= (document.documentElement.scrollHeight || document.documentElement.clientHeight),
-    createElement: str => {
+    createElement: (str) => {
         const el = document.createElement('div');
         el.innerHTML = str;
         return el.firstElementChild;
     },
-    createEventHub: () => {
+    createEventHub: {
         hub: Object.create(null),
         emit(event, data) {
             (this.hub[event] || []).forEach(handler => handler(data))
