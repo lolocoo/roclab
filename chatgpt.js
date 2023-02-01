@@ -12,3 +12,13 @@ curl https://api.openai.com/v1/images/generations \
   "n": 2,
   "size": "1024x1024"
 }'
+
+
+curl https://api.openai.com/v1/images/generations \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer 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' \
+  -d '{
+  "prompt": "the best future car in the world",
+  "n": 2,
+  "size": "1024x1024"
+}'
