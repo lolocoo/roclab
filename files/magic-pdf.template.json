@@ -5,7 +5,7 @@
     },
     "models-dir":"/tmp/models",
     "layoutreader-model-dir":"/tmp/layoutreader",
-    "device-mode":"cpu",
+    "device-mode":"cuda",
     "layout-config": {
         "model": "layoutlmv3"
     },
