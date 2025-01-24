@@ -1,6 +1,6 @@
 accelerate
 aiohappyeyeballs==2.4.4
-aiohttp==3.11.11
+aiohttp
 aiosignal==1.3.2
 async-timeout==5.0.1
 attrs==24.3.0
