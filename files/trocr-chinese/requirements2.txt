@@ -1,0 +1,10 @@
+accelerate
+datasets==2.14.5
+transformers==4.48.0
+scikit-learn
+jiwer==2.3.0
+python-Levenshtein==0.12.2
+numpy==1.24.3
+imgaug
+pillow
+pyramid==1.10.8
