@@ -1,6 +1,5 @@
 name: seal
 channels:
-  - https://artifactory.ep.chehejia.com/artifactory/api/conda/conda-remote
   - https://lpai-rt-svc:cmVmdGtuOjAxOjE3NjU2MDE4MDA6UXdMM0s3ZVF6czlrZ0tNZlVXbzlmVFZRMmNT@artifactory.ep.chehejia.com/artifactory/api/conda/conda-remote
   - conda-forge
 dependencies:
