@@ -10,6 +10,7 @@ function printHelp(): void {
   done <id>       Mark todo as completed
   remove <id>     Remove a todo
   search <word>   Search todos by keyword
+                  Options: --done, --pending
   pending         Show pending todos
   completed       Show completed todos
   help            Show this help
@@ -79,11 +80,31 @@ function handleCommand(input: string): boolean {
     }
 
     case 'search': {
-      const results = store.search(args)
+      const tokens = args.split(/\s+/)
+      const isDone = tokens.includes('--done')
+      const isPending = tokens.includes('--pending')
+      const keyword = tokens.filter((t) => !t.startsWith('--')).join(' ')
+
+      if (!keyword && !isDone && !isPending) {
+        console.log('💡 Usage: search <keyword> [--done] [--pending]')
+        console.log('   Tip: use "list" to see all todos')
+        break
+      }
+
+      const completed = isDone ? true : isPending ? false : undefined
+      const results = store.search(keyword, completed)
+
+      const label = [
+        keyword ? `"${keyword}"` : 'all',
+        isDone ? '(done)' : isPending ? '(pending)' : '',
+      ]
+        .filter(Boolean)
+        .join(' ')
+
       if (results.length === 0) {
-        console.log(`🔍 No todos matching "${args}"`)
+        console.log(`🔍 No todos matching ${label}`)
       } else {
-        console.log(`🔍 Search results for "${args}" (${results.length}):`)
+        console.log(`🔍 Search results for ${label} (${results.length}):`)
         results.forEach((t) => console.log(formatTodo(t)))
       }
       break
