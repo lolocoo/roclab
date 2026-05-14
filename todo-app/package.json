@@ -1,0 +1,19 @@
+{
+  "name": "todo-app",
+  "version": "1.0.0",
+  "description": "A simple TypeScript CLI Todo App",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "ts-node src/index.ts",
+    "test": "vitest run"
+  },
+  "keywords": ["todo", "cli", "typescript"],
+  "license": "MIT",
+  "devDependencies": {
+    "ts-node": "^10.9.2",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.6"
+  }
+}
