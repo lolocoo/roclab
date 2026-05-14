@@ -5,15 +5,17 @@ export class TodoStore {
   private nextId = 1
 
   add(input: CreateTodoInput): Todo {
-    const todo: Todo = {
-      id: this.nextId++,
-      title: input.title.trim(),
-      completed: false,
-      createdAt: new Date(),
+    const trimmed = input.title.trim()
+
+    if (!trimmed) {
+      throw new Error('Todo title cannot be empty')
     }
 
-    if (!todo.title) {
-      throw new Error('Todo title cannot be empty')
+    const todo: Todo = {
+      id: this.nextId++,
+      title: trimmed,
+      completed: false,
+      createdAt: new Date(),
     }
 
     this.todos.push(todo)
