@@ -9,6 +9,7 @@ function printHelp(): void {
   list            List all todos
   done <id>       Mark todo as completed
   remove <id>     Remove a todo
+  search <word>   Search todos by keyword
   pending         Show pending todos
   completed       Show completed todos
   help            Show this help
@@ -40,7 +41,7 @@ function handleCommand(input: string): boolean {
     case 'list': {
       const todos = store.getAll()
       if (todos.length === 0) {
-        console.log('📭 No todos yet. Use \"add <title>\" to create one.')
+        console.log('📭 No todos yet. Use "add <title>" to create one.')
       } else {
         console.log(`📋 All Todos (${todos.length}):`)
         todos.forEach((t) => console.log(formatTodo(t)))
@@ -77,6 +78,17 @@ function handleCommand(input: string): boolean {
       break
     }
 
+    case 'search': {
+      const results = store.search(args)
+      if (results.length === 0) {
+        console.log(`🔍 No todos matching "${args}"`)
+      } else {
+        console.log(`🔍 Search results for "${args}" (${results.length}):`)
+        results.forEach((t) => console.log(formatTodo(t)))
+      }
+      break
+    }
+
     case 'pending': {
       const pending = store.getPending()
       console.log(`⬜ Pending (${pending.length}):`)
@@ -101,7 +113,7 @@ function handleCommand(input: string): boolean {
       return false
 
     default:
-      console.log('❓ Unknown command. Type \"help\" for available commands.')
+      console.log('❓ Unknown command. Type "help" for available commands.')
   }
 
   return true

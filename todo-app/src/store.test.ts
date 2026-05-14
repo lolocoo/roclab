@@ -135,6 +135,70 @@ describe('TodoStore', () => {
     })
   })
 
+  // ─── search ────────────────────────────────────────
+
+  describe('search', () => {
+    beforeEach(() => {
+      store.add({ title: 'Buy milk' })
+      store.add({ title: 'Buy eggs' })
+      store.add({ title: 'Learn TypeScript' })
+      store.add({ title: 'Write tests' })
+      store.update(1, { completed: true })
+      store.update(4, { completed: true })
+    })
+
+    it('should find todos matching keyword', () => {
+      const results = store.search('buy')
+
+      expect(results).toHaveLength(2)
+      expect(results.map((t) => t.title)).toEqual(['Buy milk', 'Buy eggs'])
+    })
+
+    it('should be case-insensitive', () => {
+      const results = store.search('MILK')
+
+      expect(results).toHaveLength(1)
+      expect(results[0].title).toBe('Buy milk')
+    })
+
+    it('should return all todos for empty keyword', () => {
+      const results = store.search('')
+
+      expect(results).toHaveLength(4)
+    })
+
+    it('should return empty array when no match', () => {
+      const results = store.search('nonexistent')
+
+      expect(results).toHaveLength(0)
+    })
+
+    it('should filter by completed status', () => {
+      const completed = store.search('', true)
+      const pending = store.search('', false)
+
+      expect(completed).toHaveLength(2)
+      expect(completed.map((t) => t.title)).toEqual(['Buy milk', 'Write tests'])
+
+      expect(pending).toHaveLength(2)
+      expect(pending.map((t) => t.title)).toEqual(['Buy eggs', 'Learn TypeScript'])
+    })
+
+    it('should combine keyword and status filter', () => {
+      const results = store.search('buy', true)
+
+      expect(results).toHaveLength(1)
+      expect(results[0].title).toBe('Buy milk')
+    })
+
+    it('should trim keyword whitespace', () => {
+      const results = store.search('  milk  ')
+
+      expect(results).toHaveLength(1)
+      expect(results[0].title).toBe('Buy milk')
+    })
+  })
+
   // ─── filters ───────────────────────────────────────
 
   describe('getCompleted / getPending', () => {

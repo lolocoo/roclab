@@ -59,6 +59,16 @@ export class TodoStore {
     return true
   }
 
+  search(keyword: string, completed?: boolean): Todo[] {
+    const lowerKeyword = keyword.toLowerCase().trim()
+
+    return this.todos.filter((todo) => {
+      const matchesKeyword = !lowerKeyword || todo.title.toLowerCase().includes(lowerKeyword)
+      const matchesStatus = completed === undefined || todo.completed === completed
+      return matchesKeyword && matchesStatus
+    })
+  }
+
   getCompleted(): Todo[] {
     return this.todos.filter((t) => t.completed)
   }
